@@ -61,7 +61,8 @@ class ScheduleViewController: UIViewController {
         
         } else {
             
-            
+            calendar.setScope(.week, animated: true)
+            showHideButton.setTitle("Open calendar", for: .normal)
             
         }
     }
