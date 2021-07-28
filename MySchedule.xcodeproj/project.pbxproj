@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,8 @@
 		E2A89FE526A85196005EDE34 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A89FE426A85196005EDE34 /* ScheduleViewController.swift */; };
 		E2A89FE726A851AF005EDE34 /* TasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A89FE626A851AF005EDE34 /* TasksViewController.swift */; };
 		E2A89FE926A851CE005EDE34 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A89FE826A851CE005EDE34 /* ContactsViewController.swift */; };
+		E2F57DA026B1601400DA1355 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F57D9F26B1601400DA1355 /* UIStackView.swift */; };
+		E2F7E2B426AC16E700F213A0 /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F7E2B326AC16E700F213A0 /* ScheduleTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		E2A89FE426A85196005EDE34 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		E2A89FE626A851AF005EDE34 /* TasksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewController.swift; sourceTree = "<group>"; };
 		E2A89FE826A851CE005EDE34 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
+		E2F57D9F26B1601400DA1355 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		E2F7E2B326AC16E700F213A0 /* ScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +64,6 @@
 				120D153B78ECE3E6C48E6066 /* Pods-MySchedule.debug.xcconfig */,
 				1D05A372BC7329F5AD985A71 /* Pods-MySchedule.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -87,6 +90,8 @@
 			children = (
 				E2A89FE126A82EF7005EDE34 /* Application */,
 				E2A89FE226A82F26005EDE34 /* Controllers */,
+				E2F7E2B126AC161600F213A0 /* Model */,
+				E2F57D9D26B15FEB00DA1355 /* Extensions */,
 				E2A89FE326A82F47005EDE34 /* Resources */,
 			);
 			path = MySchedule;
@@ -120,6 +125,38 @@
 				E2A89FDB26A8275B005EDE34 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		E2F57D9D26B15FEB00DA1355 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E2F57D9E26B1600200DA1355 /* UIKit */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E2F57D9E26B1600200DA1355 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				E2F57D9F26B1601400DA1355 /* UIStackView.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		E2F7E2B126AC161600F213A0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E2F7E2B226AC162000F213A0 /* Cell */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E2F7E2B226AC162000F213A0 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E2F7E2B326AC16E700F213A0 /* ScheduleTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,7 +273,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2A89FD226A8275A005EDE34 /* MainTapBarController.swift in Sources */,
+				E2F7E2B426AC16E700F213A0 /* ScheduleTableViewCell.swift in Sources */,
 				E2A89FCE26A8275A005EDE34 /* AppDelegate.swift in Sources */,
+				E2F57DA026B1601400DA1355 /* UIStackView.swift in Sources */,
 				E2A89FE726A851AF005EDE34 /* TasksViewController.swift in Sources */,
 				E2A89FD026A8275A005EDE34 /* SceneDelegate.swift in Sources */,
 				E2A89FE526A85196005EDE34 /* ScheduleViewController.swift in Sources */,

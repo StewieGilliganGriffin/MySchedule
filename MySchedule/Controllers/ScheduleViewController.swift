@@ -34,6 +34,15 @@ class ScheduleViewController: UIViewController {
         
     }()
     
+    let tableView: UITableView = {
+        
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
+    let idScheduleCell = "idScheduleCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,9 +55,15 @@ class ScheduleViewController: UIViewController {
         //недельное отображение календаря
         calendar.scope = .week
         
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(ScheduleTableViewCell.self, forCellReuseIdentifier: idScheduleCell)
+        
         setConstrains()
         
-        showHideButton.addTarget(self, action: #selector(showHideButtonTapped), for: .touchUpOutside)
+        showHideButton.addTarget(self, action: #selector(showHideButtonTapped), for: .touchUpInside)
+        
+        swipeAction()
    
     }
     
@@ -66,14 +81,65 @@ class ScheduleViewController: UIViewController {
             
         }
     }
-
+    //спайп календаря
+    func swipeAction() {
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        swipeUp.direction = .up
+        calendar.addGestureRecognizer(swipeUp)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        swipeDown.direction = .down
+        calendar.addGestureRecognizer(swipeDown)
+    }
+    
+    @objc func handleSwipe(gesture: UISwipeGestureRecognizer) {
+        
+        switch gesture.direction {
+        case .up:
+            showHideButtonTapped()
+        case .down:
+            showHideButtonTapped()
+        default:
+            break
+        }
+        
+    }
 }
+
+extension ScheduleViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: idScheduleCell, for: indexPath) as! ScheduleTableViewCell
+        switch indexPath.row {
+        case 0: cell.backgroundColor = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1)
+        case 1: cell.backgroundColor = #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+        default:
+            cell.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
+    }
+    
+}
+
 
 extension ScheduleViewController: FSCalendarDataSource, FSCalendarDelegate {
     //констреинт будет меняться в зависимости от высоты календаря
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         calendarHeightConstraint.constant = bounds.height
         view.layoutIfNeeded()
+    }
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        print(date)
     }
     
 }
@@ -103,6 +169,15 @@ extension ScheduleViewController {
             showHideButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             showHideButton.widthAnchor.constraint(equalToConstant: 100),
             showHideButton.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
+        //расположение тейбл вью
+        view.addSubview(tableView)
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: showHideButton.bottomAnchor, constant: 10),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
         
     }
