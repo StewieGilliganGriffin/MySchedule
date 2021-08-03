@@ -9,27 +9,7 @@ import UIKit
 import FSCalendar
 
 class TasksViewController: UIViewController {
-
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        title = "Tasks"
-        calendar.delegate = self
-        calendar.dataSource = self
-        //недельное отображение календаря
-        calendar.scope = .week
-        
-        setConstrains()
-        
-        showHideButton.addTarget(self, action: #selector(showHideButtonTapped), for: .touchUpInside)
-        
-        swipeAction()
-   
-    }
-
     var calendarHeightConstraint : NSLayoutConstraint!
     
     //настройка календаря
@@ -53,6 +33,39 @@ class TasksViewController: UIViewController {
         return button
         
     }()
+    
+    let tableView: UITableView = {
+        
+        let tableView = UITableView()
+        //параметр, чтобы не оттягивались строки вниз и вверх
+        tableView.bounces = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
+    let idTasksCell = "idTasksCell"
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        title = "Tasks"
+        calendar.delegate = self
+        calendar.dataSource = self
+        //недельное отображение календаря
+        calendar.scope = .week
+        
+        setConstrains()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(TasksTableViewCell.self, forCellReuseIdentifier: idTasksCell)
+        
+        showHideButton.addTarget(self, action: #selector(showHideButtonTapped), for: .touchUpInside)
+        
+        swipeAction()
+   
+    }
     
     @objc func showHideButtonTapped() {
         
@@ -94,6 +107,33 @@ class TasksViewController: UIViewController {
     }
 }
 
+extension TasksViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: idTasksCell, for: indexPath) as! TasksTableViewCell
+        cell.cellTaskDelegate = self
+        cell.index = indexPath
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+}
+
+extension TasksViewController: PressReadyTuskButtonProtocol {
+    func readyButtonPressed(indexPath: IndexPath) {
+        print("TAP")
+    }
+    
+    
+}
+
 extension TasksViewController: FSCalendarDataSource, FSCalendarDelegate {
     //констреинт будет меняться в зависимости от высоты календаря
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
@@ -133,6 +173,15 @@ extension TasksViewController {
             showHideButton.widthAnchor.constraint(equalToConstant: 100),
             showHideButton.heightAnchor.constraint(equalToConstant: 20)
         ])
+        
+        view.addSubview(tableView)
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: showHideButton.bottomAnchor, constant: 10),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        ])
+        
         
     }
     
